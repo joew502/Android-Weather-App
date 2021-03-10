@@ -2,8 +2,12 @@ package com.ecm2425.caweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -22,6 +26,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         weatherResultsTextView = (TextView) findViewById(R.id.tv_weather_results_json);
         getWeatherQuery();
+        final Button hourlyButton = (Button) findViewById(R.id.hButton);
+
+        hourlyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = MainActivity.this;
+                Class destinationActivity = HourlyActivity.class;
+                Intent intent = new Intent (context, destinationActivity);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getWeatherQuery() {
