@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,11 +50,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String weatherResults) {
             if (weatherResults != null && !weatherResults.equals("")) {
                 weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
-                JSONObject current = weatherResultsJSON.getCurrent();
-                String temp = weatherResultsJSON.getTemp(current);
-                JSONObject currentWeather = weatherResultsJSON.getWeather(current);
-                String description = weatherResultsJSON.getDescription(currentWeather);
-                String out = "Temp: " + temp + " Description: " + description;
+                String out = weatherResultsJSON.currentWeatherStr();
                 weatherResultsTextView.setText(out);
             }
         }
