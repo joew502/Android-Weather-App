@@ -2,6 +2,8 @@ package com.ecm2425.caweather;
 
 import android.net.Uri;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
