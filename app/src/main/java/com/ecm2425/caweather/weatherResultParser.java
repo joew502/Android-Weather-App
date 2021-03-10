@@ -16,39 +16,43 @@ public class weatherResultParser {
         }
     }
 
-    private JSONArray getWeather(){
-        JSONArray weatherArray = null;
+    public JSONObject getCurrent(){
+        JSONObject currentWeather = null;
         try {
-            weatherArray = weatherResultJSON.getJSONArray("weather");
+            currentWeather = weatherResultJSON.getJSONObject("current");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return weatherArray;
+        return currentWeather;
     }
 
-    private JSONObject getMain(){
-        JSONObject mainWeather = null;
+    public JSONObject getWeather(JSONObject mainObj){
+        JSONObject weatherObj = null;
         try {
-            mainWeather = weatherResultJSON.getJSONObject("main");
+            weatherObj = mainObj.getJSONArray("weather").getJSONObject(0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return mainWeather;
+        return weatherObj;
     }
 
-    //public String getDescription(){
-    //    JSONArray weatherArray = getWeather();
-    //    String description =
-    //}
-
-    public String getTemp() {
-        JSONObject mainWeather = getMain();
+    public String getTemp(JSONObject mainObj) {
         String temp = null;
         try {
-            temp = mainWeather.getString("temp");
+            temp = mainObj.getString("temp");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return temp;
+    }
+
+    public String getDescription(JSONObject weatherObj) {
+        String description = null;
+        try {
+            description = weatherObj.getString("description");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return description;
     }
 }
