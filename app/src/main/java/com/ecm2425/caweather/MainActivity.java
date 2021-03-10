@@ -6,8 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,14 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void getWeatherQuery() {
         URL weatherApiUrl = WeatherAPI.buildURL();
-        // Create a new GithubQueryTask and call its execute method, passing in the url to query
+        // Create a new GetWeatherTask and call its execute method, passing in the url to query
         new GetWeatherTask().execute(weatherApiUrl);
     }
 
-
     public class GetWeatherTask extends AsyncTask<URL, Void, String> {
 
-        // Override the doInBackground method to perform the query. Return the results. (Hint: You've already written the code to perform the query)
+        // Override the doInBackground method to perform the query. Return the results.
         @Override
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
@@ -46,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String weatherResults) {
             if (weatherResults != null && !weatherResults.equals("")) {
-                weatherResultsTextView.setText(weatherResults);
+                weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
+                String out = weatherResultsJSON.currentWeatherStr();
+                weatherResultsTextView.setText(out);
             }
         }
     }
