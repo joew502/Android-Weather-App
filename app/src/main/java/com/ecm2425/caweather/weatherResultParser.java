@@ -155,7 +155,7 @@ public class weatherResultParser {
         for (int i = 0; i < 8; i++) {
             HashMap<String, String> dayResult = new HashMap<>();
             try {
-                JSONObject day = allDailyWeather.getJSONObject(i);
+                day = allDailyWeather.getJSONObject(i);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -179,6 +179,6 @@ public class weatherResultParser {
             dayResult.put("desc", desc);
             dailyWeatherResult.add(dayResult);
         }
-        return dailyWeatherResult
+        return dailyWeatherResult;
     }
 }

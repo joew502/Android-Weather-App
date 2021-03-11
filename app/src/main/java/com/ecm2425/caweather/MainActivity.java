@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mySharedPreferences;
     SharedPreferences.Editor myEditor;
     private String location;
+    private static String masterWeatherResults;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
         new GetWeatherTask().execute(weatherApiUrl);
     }
 
+    public static String getMasterWeatherResults() {
+        return masterWeatherResults;
+    }
+
 
     public class GetWeatherTask extends AsyncTask<URL, Void, String> {
 
@@ -104,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String weatherResults) {
             if (weatherResults != null && !weatherResults.equals("")) {
+                masterWeatherResults = weatherResults;
                 weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
                 String out = weatherResultsJSON.currentWeatherStr(location);
                 weatherResultsTextView.setText(out);

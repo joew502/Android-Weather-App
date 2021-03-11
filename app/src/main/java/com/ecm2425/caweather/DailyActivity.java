@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class DailyActivity extends AppCompatActivity {
 
     private static final int NUM_LIST_ITEMS = 8;
@@ -23,7 +26,12 @@ public class DailyActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         dailyWeatherList.setLayoutManager(layoutManager);
         dailyWeatherList.setHasFixedSize(true);
-        dailyAdapter = new DailyAdapter(NUM_LIST_ITEMS);
+
+        String weatherResults = MainActivity.getMasterWeatherResults();
+        weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
+        ArrayList<HashMap<String, String>> dailyWeatherResult = weatherResultsJSON.dailyWeather();
+
+        dailyAdapter = new DailyAdapter(dailyWeatherResult, NUM_LIST_ITEMS);
         dailyWeatherList.setAdapter(dailyAdapter);
     }
 }

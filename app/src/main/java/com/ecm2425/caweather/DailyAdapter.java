@@ -9,12 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeatherViewHolder> {
 
-    private int mNumberItems;
+    private ArrayList<HashMap<String, String>> dailyWeather;
+    private int numberItems;
+    private static int viewHolderCount;
 
-    public DailyAdapter(int numberOfItems) {
-        mNumberItems = numberOfItems;
+    public DailyAdapter(ArrayList<HashMap<String, String>> dailyWeatherResult, int numberOfItems) {
+        dailyWeather = dailyWeatherResult;
+        numberItems = numberOfItems;
+        viewHolderCount = 0;
     }
 
     @Override
@@ -33,6 +40,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
         viewHolder.rainView.setText("Good");
         viewHolder.descView.setText("Good");
 
+        viewHolderCount++;
         return viewHolder;
     }
 
@@ -43,7 +51,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
 
     @Override
     public int getItemCount() {
-        return mNumberItems;
+        return numberItems;
     }
 
     class dailyWeatherViewHolder extends RecyclerView.ViewHolder {
