@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ecm2425.testandlearn3.MainActivity">
+    <item
+        android:id="@+id/action_exeter"
+        android:title="Exeter"
+        app:showAsAction="never" />
+        <!--android:onClick="onClickLocationExeter"-->
+    <item
+        android:id="@+id/action_london"
+        android:title="London"
+        app:showAsAction="never" />
+    <!--android:onClick="onClickLocationLondon"-->
+</menu>
