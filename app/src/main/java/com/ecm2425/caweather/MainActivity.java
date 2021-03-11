@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mySharedPreferences = getSharedPreferences(MYPREFS, 0);
+        mySharedPreferences = getSharedPreferences(MYPREFS, Context.MODE_PRIVATE);
         myEditor = mySharedPreferences.edit();
 
         if (mySharedPreferences != null && mySharedPreferences.contains("location")) {
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        /*
         final Button exeterButton = (Button) findViewById(R.id.action_exeter);
         exeterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 applySavedPreferences();
             }
         });
-
+        */
         /*exeterButton = (Button) findViewById(R.id.action_exeter);
         exeterButton.setOnClickListener((View.OnClickListener) this);
         londonButton = (Button) findViewById(R.id.action_london);
@@ -153,20 +153,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickLocationExeter(View v) {
-        myEditor.clear();
-        myEditor.putString("location", "Exeter");
-        myEditor.commit();
-        applySavedPreferences();
-    }
-
-    public void onClickLocationLondon(View v) {
-        myEditor.clear();
-        myEditor.putString("location", "London");
-        myEditor.commit();
-        applySavedPreferences();
-    }
-
     public void onClickMoreWeather(View v) {
         String urlAsString = "https://openweathermap.org/city/2649808";
         openWebPage(urlAsString);
@@ -192,10 +178,16 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_exeter:
-                // do something
+                myEditor.clear();
+                myEditor.putString("location", "Exeter");
+                myEditor.commit();
+                applySavedPreferences();
                 return true;
             case R.id.action_london:
-                // do something
+                myEditor.clear();
+                myEditor.putString("location", "London");
+                myEditor.commit();
+                applySavedPreferences();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
