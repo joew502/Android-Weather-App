@@ -6,10 +6,8 @@
         android:id="@+id/action_exeter"
         android:title="Exeter"
         app:showAsAction="never" />
-        <!--android:onClick="onClickLocationExeter"-->
     <item
         android:id="@+id/action_london"
         android:title="London"
         app:showAsAction="never" />
-    <!--android:onClick="onClickLocationLondon"-->
 </menu>

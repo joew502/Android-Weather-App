@@ -20,17 +20,19 @@ public class WeatherAPI {
     final static String PARAM_UNITS = "units";
     final static String PARAM_APIKEY = "appid";
     final static String PARAM_EXCLUDE = "exclude";
-    final static String LAT = "50.7236";
-    final static String LON = "-3.5275";
+    //final static String LAT = "50.7236";
+    //final static String LON = "-3.5275";
     final static String UNITS = "metric";
     final static String APIKEY = "6f82e0a5c4ae28f19b131e7bba6fdedf";
     final static String EXCLUDE = "exclude";
 
 
-    public static URL buildURL () {
+    public static URL buildURL (String location) {
+        String[] coords = getCoords(location);
+
         Uri builtUri = Uri.parse(WEATHER_BASE_API).buildUpon()
-                .appendQueryParameter(PARAM_LAT, LAT)
-                .appendQueryParameter(PARAM_LON, LON)
+                .appendQueryParameter(PARAM_LAT, coords[0])
+                .appendQueryParameter(PARAM_LON, coords[1])
                 .appendQueryParameter(PARAM_UNITS, UNITS)
                 .appendQueryParameter(PARAM_APIKEY, APIKEY)
                 .appendQueryParameter(PARAM_EXCLUDE, EXCLUDE)
@@ -42,6 +44,22 @@ public class WeatherAPI {
             e.printStackTrace();
         }
         return url;
+    }
+
+    private static String[] getCoords(String location) {
+        String lat;
+        String lon;
+        switch (location){
+            case "London":
+                lat = "51.5085";
+                lon = "-0.1257";
+                break;
+            default:
+                lat = "50.7236";
+                lon = "-3.5275";
+        }
+        String[] coords = {lat, lon};
+        return coords;
     }
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
