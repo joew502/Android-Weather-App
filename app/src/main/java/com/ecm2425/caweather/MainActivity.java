@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mySharedPreferences;
     SharedPreferences.Editor myEditor;
     private String location;
-    //Button exeterButton;
-    //Button londonButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,48 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*
-        final Button exeterButton = (Button) findViewById(R.id.action_exeter);
-        exeterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myEditor.clear();
-                myEditor.putString("location", "Exeter");
-                myEditor.commit();
-                applySavedPreferences();
-            }
-        });
-
-        final Button londonButton = (Button) findViewById(R.id.action_london);
-        londonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myEditor.clear();
-                myEditor.putString("location", "London");
-                myEditor.commit();
-                applySavedPreferences();
-            }
-        });
-        */
-        /*exeterButton = (Button) findViewById(R.id.action_exeter);
-        exeterButton.setOnClickListener((View.OnClickListener) this);
-        londonButton = (Button) findViewById(R.id.action_london);
-        londonButton.setOnClickListener(this);*/
 
     }
-
-    /*public void onClick(View v) {
-        myEditor.clear();
-
-        // what button has been clicked?
-        if (v.getId() == exeterButton.getId()) {
-            myEditor.putString("location", "Exeter");
-        } else { // case londonButton
-            myEditor.putString("location", "London");
-        }
-        myEditor.commit();
-        applySavedPreferences();
-    }*/
 
     private void applySavedPreferences() {
         String locationSP = mySharedPreferences.getString("location","Exeter");
@@ -147,14 +105,21 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String weatherResults) {
             if (weatherResults != null && !weatherResults.equals("")) {
                 weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
-                String out = weatherResultsJSON.currentWeatherStr();
+                String out = weatherResultsJSON.currentWeatherStr(location);
                 weatherResultsTextView.setText(out);
             }
         }
     }
 
     public void onClickMoreWeather(View v) {
-        String urlAsString = "https://openweathermap.org/city/2649808";
+        String urlAsString;
+        switch (location) {
+            case "London":
+                urlAsString = "https://openweathermap.org/city/2649808";
+                break;
+            default:
+                urlAsString = "https://openweathermap.org/city/2649808";
+        }
         openWebPage(urlAsString);
     }
 
