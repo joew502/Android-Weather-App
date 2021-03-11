@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mySharedPreferences;
     SharedPreferences.Editor myEditor;
     private String location;
+    //Button exeterButton;
+    //Button londonButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button exeterButton = (Button) findViewById(R.id.action_exeter);
+        exeterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myEditor.clear();
+                myEditor.putString("location", "Exeter");
+                myEditor.commit();
+                applySavedPreferences();
+            }
+        });
+
+        final Button londonButton = (Button) findViewById(R.id.action_london);
+        londonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myEditor.clear();
+                myEditor.putString("location", "London");
+                myEditor.commit();
+                applySavedPreferences();
+            }
+        });
+
+        /*exeterButton = (Button) findViewById(R.id.action_exeter);
+        exeterButton.setOnClickListener((View.OnClickListener) this);
+        londonButton = (Button) findViewById(R.id.action_london);
+        londonButton.setOnClickListener(this);*/
+
     }
+
+    /*public void onClick(View v) {
+        myEditor.clear();
+
+        // what button has been clicked?
+        if (v.getId() == exeterButton.getId()) {
+            myEditor.putString("location", "Exeter");
+        } else { // case londonButton
+            myEditor.putString("location", "London");
+        }
+        myEditor.commit();
+        applySavedPreferences();
+    }*/
 
     private void applySavedPreferences() {
         String locationSP = mySharedPreferences.getString("location","Exeter");
