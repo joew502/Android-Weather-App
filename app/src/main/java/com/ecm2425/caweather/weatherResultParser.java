@@ -117,10 +117,10 @@ public class weatherResultParser {
         return weather;
     }
 
-    public String currentWeatherStr(){
+    public String currentWeatherStr(String location){
         HashMap current = currentWeather();
 
-        return " Current Weather:"
+        return " Current Weather in " + location + ":"
                 + "\n Temp: " + current.get("temp") + "°C"
                 + "\n Description: " + current.get("description")
                 + "\n Clouds: " + current.get("clouds") + "%"
