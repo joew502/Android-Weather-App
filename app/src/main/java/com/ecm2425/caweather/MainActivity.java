@@ -22,24 +22,10 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private TextView weatherResultsTextView;
-    final String MYPREFS = "MyPreferences_001";
-    SharedPreferences mySharedPreferences;
-    SharedPreferences.Editor myEditor;
-    private String location;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mySharedPreferences = getSharedPreferences(MYPREFS, 0);
-        myEditor = mySharedPreferences.edit();
-
-        if (mySharedPreferences != null && mySharedPreferences.contains("location")) {
-            applySavedPreferences();
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "No Preferences found", Toast.LENGTH_LONG).show();
-        }
 
         weatherResultsTextView = (TextView) findViewById(R.id.tv_weather_results_json);
         getWeatherQuery();
@@ -68,26 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void applySavedPreferences() {
-        String locationSP = mySharedPreferences.getString("location","Exeter");
-        String msg = "location " + locationSP;
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-        location = locationSP;
-        getWeatherQuery();
-    }
-
     private void getWeatherQuery() {
-        URL weatherApiUrl = WeatherAPI.buildURL(location);
+        URL weatherApiUrl = WeatherAPI.buildURL();
         // Create a new GetWeatherTask and call its execute method, passing in the url to query
         new GetWeatherTask().execute(weatherApiUrl);
     }
 
-    public String getLocation() {
-        if (location == null) {
-            return "Exeter";
-        }
-        return location;
-    }
 
     public class GetWeatherTask extends AsyncTask<URL, Void, String> {
 
@@ -113,20 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 weatherResultsTextView.setText(out);
             }
         }
-    }
-
-    public void onClickLocationExeter(View v) {
-        myEditor.clear();
-        myEditor.putString("location", "Exeter");
-        myEditor.commit();
-        applySavedPreferences();
-    }
-
-    public void onClickLocationLondon(View v) {
-        myEditor.clear();
-        myEditor.putString("location", "London");
-        myEditor.commit();
-        applySavedPreferences();
     }
 
     public void onClickMoreWeather(View v) {
