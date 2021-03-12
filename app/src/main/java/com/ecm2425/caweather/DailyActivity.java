@@ -1,6 +1,7 @@
 package com.ecm2425.caweather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,10 @@ public class DailyActivity extends AppCompatActivity {
         String weatherResults = MainActivity.getMasterWeatherResults();
         weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
         ArrayList dailyWeatherResult = weatherResultsJSON.dailyWeather();
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dailyWeatherList.getContext(),
+                layoutManager.getOrientation());
+        dailyWeatherList.addItemDecoration(dividerItemDecoration);
 
         dailyAdapter = new DailyAdapter(dailyWeatherResult, NUM_LIST_ITEMS);
         dailyWeatherList.setAdapter(dailyAdapter);
