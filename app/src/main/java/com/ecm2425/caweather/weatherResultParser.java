@@ -1,9 +1,12 @@
 package com.ecm2425.caweather;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.font.NumericShaper;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -65,6 +68,14 @@ public class weatherResultParser {
         sdf.setTimeZone(java.util.TimeZone.getTimeZone(timeZone));
         String timeFormated = sdf.format(timeFormat);
         return timeFormated;
+    }
+
+    private String formatDay(Integer time, String timeZone) {
+        Date timeFormat = new java.util.Date(time*1000L);
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE dd");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone(timeZone));
+        String dayFormated = sdf.format(timeFormat);
+        return dayFormated;
     }
 
     private HashMap currentWeather(){
@@ -129,5 +140,65 @@ public class weatherResultParser {
                 + "\n Wind Direction: " + current.get("wind_direction")
                 + "\n Sunrise: " + current.get("sunrise")
                 + "\n Sunset: " + current.get("sunset");
+    }
+
+    public ArrayList dailyWeather() {
+        JSONArray allDailyWeather = null;
+        try {
+            allDailyWeather = weatherResultJSON.getJSONArray("daily");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList dailyWeatherResult = new ArrayList();
+        JSONObject day = null;
+
+        for (int i = 0; i < 8; i++) {
+            HashMap<String, String> dayResult = new HashMap<String, String>();
+            try {
+                day = allDailyWeather.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            assert day != null;
+            //JSONObject dayTemp = getInner(day, "temp");
+            //JSONObject dayWeather = getInner(day, "weather");
+            Integer unixTime = getInt(day, "dt");
+            //Integer tempMin = getInt(dayTemp, "day");
+            //Integer tempMax = getInt(dayTemp, "max");
+            Integer pop = getInt(day, "pop");
+            //String desc = getStr(dayWeather, "Main");
+
+            Integer tempMin = 0;
+            Integer tempMax = 0;
+            String desc= "";
+            try {
+                tempMin = day.getJSONObject("temp").getInt("min");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                tempMax = day.getJSONObject("temp").getInt("max");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                desc = day.getJSONArray("weather").getJSONObject(0).getString("main");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            int rain = pop*100;
+
+            String date = formatDay(unixTime, "GMT");
+
+            dayResult.put("day", date);
+            dayResult.put("tempMin", tempMin.toString());
+            dayResult.put("tempMax", tempMax.toString());
+            dayResult.put("rain", Integer.toString(rain));
+            dayResult.put("desc", desc);
+            dailyWeatherResult.add(dayResult);
+        }
+        return dailyWeatherResult;
     }
 }
