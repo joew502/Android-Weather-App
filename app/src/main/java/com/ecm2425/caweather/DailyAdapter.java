@@ -40,9 +40,9 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
         HashMap<String, String> day = (HashMap<String, String>) dailyWeather.get(viewHolderCount);
 
         viewHolder.dayView.setText(day.get("day"));
-        viewHolder.tempMaxView.setText(day.get("tempMin") + "°C");
-        viewHolder.tempMinView.setText(day.get("tempMax") + "°C");
-        viewHolder.rainView.setText(day.get("rain") + "%");
+        viewHolder.tempMaxView.setText("Min: " + day.get("tempMin") + "°C");
+        viewHolder.tempMinView.setText("Max: " + day.get("tempMax") + "°C");
+        viewHolder.rainView.setText("Chance of Rain: " + day.get("rain") + "%");
         viewHolder.descView.setText(day.get("desc"));
 
         viewHolderCount++;

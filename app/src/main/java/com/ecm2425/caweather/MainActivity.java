@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             applySavedPreferences();
         } else {
             Toast.makeText(getApplicationContext(),
-                    "No Preferences found", Toast.LENGTH_LONG).show();
+                    "No Preferences Found", Toast.LENGTH_LONG).show();
             location = "Exeter";
         }
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void applySavedPreferences() {
         String locationSP = mySharedPreferences.getString("location","Exeter");
-        String msg = "location " + locationSP;
+        String msg = "Location " + locationSP;
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         location = locationSP;
         getWeatherQuery();
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     public static String getMasterWeatherResults() {
         return masterWeatherResults;
     }
-
 
     public class GetWeatherTask extends AsyncTask<URL, Void, String> {
 
