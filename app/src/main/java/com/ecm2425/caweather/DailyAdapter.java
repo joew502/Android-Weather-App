@@ -33,9 +33,6 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         dailyWeatherViewHolder viewHolder = new dailyWeatherViewHolder(view);
-        System.out.println(viewHolderCount);
-        System.out.println(dailyWeather.toString());
-
 
         HashMap<String, String> day = (HashMap<String, String>) dailyWeather.get(viewHolderCount);
 
@@ -46,7 +43,6 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
         viewHolder.descView.setText(day.get("desc"));
 
         viewHolderCount++;
-        System.out.println(viewHolderCount);
         return viewHolder;
     }
 
