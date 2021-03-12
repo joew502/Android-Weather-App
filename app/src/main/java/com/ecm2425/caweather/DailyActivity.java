@@ -29,7 +29,7 @@ public class DailyActivity extends AppCompatActivity {
 
         String weatherResults = MainActivity.getMasterWeatherResults();
         weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
-        ArrayList<HashMap<String, String>> dailyWeatherResult = weatherResultsJSON.dailyWeather();
+        ArrayList dailyWeatherResult = weatherResultsJSON.dailyWeather();
 
         dailyAdapter = new DailyAdapter(dailyWeatherResult, NUM_LIST_ITEMS);
         dailyWeatherList.setAdapter(dailyAdapter);

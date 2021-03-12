@@ -14,11 +14,11 @@ import java.util.HashMap;
 
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeatherViewHolder> {
 
-    private ArrayList<HashMap<String, String>> dailyWeather;
+    private ArrayList dailyWeather;
     private int numberItems;
     private static int viewHolderCount;
 
-    public DailyAdapter(ArrayList<HashMap<String, String>> dailyWeatherResult, int numberOfItems) {
+    public DailyAdapter(ArrayList dailyWeatherResult, int numberOfItems) {
         dailyWeather = dailyWeatherResult;
         numberItems = numberOfItems;
         viewHolderCount = 0;
@@ -33,14 +33,20 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         dailyWeatherViewHolder viewHolder = new dailyWeatherViewHolder(view);
+        System.out.println(viewHolderCount);
+        System.out.println(dailyWeather.toString());
 
-        viewHolder.dayView.setText("Good");
-        viewHolder.tempMaxView.setText("Good");
-        viewHolder.tempMinView.setText("Good");
-        viewHolder.rainView.setText("Good");
-        viewHolder.descView.setText("Good");
+
+        HashMap<String, String> day = (HashMap<String, String>) dailyWeather.get(viewHolderCount);
+
+        viewHolder.dayView.setText(day.get("day"));
+        viewHolder.tempMaxView.setText(day.get("tempMin") + "°C");
+        viewHolder.tempMinView.setText(day.get("tempMax") + "°C");
+        viewHolder.rainView.setText(day.get("rain") + "%");
+        viewHolder.descView.setText(day.get("desc"));
 
         viewHolderCount++;
+        System.out.println(viewHolderCount);
         return viewHolder;
     }
 
