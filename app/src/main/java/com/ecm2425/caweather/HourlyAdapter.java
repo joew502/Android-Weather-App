@@ -14,8 +14,8 @@ import java.util.HashMap;
 
 public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.hourlyWeatherViewHolder> {
     private ArrayList hourlyWeather;
-    private Integer numberItems;
-    private static Integer viewHolderCount;
+    private int numberItems;
+    private static int viewHolderCount;
 
     public HourlyAdapter(ArrayList hourlyWeatherResult, int numberOfItems) {
         hourlyWeather = hourlyWeatherResult;
@@ -33,13 +33,12 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.hourlyWeat
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         hourlyWeatherViewHolder viewHolder = new hourlyWeatherViewHolder(view);
 
-        //HashMap<String, String> day = (HashMap<String, String>) hourlyWeather.get(viewHolderCount);
+        HashMap<String, String> hour = (HashMap<String, String>) hourlyWeather.get(viewHolderCount);
 
-        //viewHolder.dayView.setText(day.get("day"));
-        //viewHolder.tempMaxView.setText("Min: " + day.get("tempMin") + "°C");
-        //viewHolder.tempMinView.setText("Max: " + day.get("tempMax") + "°C");
-        //viewHolder.rainView.setText("Chance of Rain: " + day.get("rain") + "%");
-        //viewHolder.descView.setText(day.get("desc"));
+        viewHolder.dayView.setText(hour.get("day"));
+        viewHolder.tempView.setText(hour.get("temp") + "°C");
+        viewHolder.rainView.setText("Chance of Rain: " + hour.get("rain") + "%");
+        viewHolder.descView.setText(hour.get("desc"));
 
         viewHolderCount++;
         return viewHolder;

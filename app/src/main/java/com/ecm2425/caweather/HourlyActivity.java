@@ -32,10 +32,9 @@ public class HourlyActivity extends AppCompatActivity {
         hourlyWeatherList.setLayoutManager(layoutManager);
         hourlyWeatherList.setHasFixedSize(true);
 
-        //String weatherResults = MainActivity.getMasterWeatherResults();
-        //weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
-        //ArrayList hourlyWeatherResult = weatherResultsJSON.dailyWeather();
-        ArrayList hourlyWeatherResult = null;
+        String weatherResults = MainActivity.getMasterWeatherResults();
+        weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
+        ArrayList hourlyWeatherResult = weatherResultsJSON.hourlyWeather();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(hourlyWeatherList.getContext(),
                 layoutManager.getOrientation());
