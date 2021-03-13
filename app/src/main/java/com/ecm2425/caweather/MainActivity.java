@@ -23,6 +23,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private TextView weatherResultsTextView;
+    private TextView weatherTitleTextView;
     final String MYPREFS = "WeatherPreferences";
     SharedPreferences mySharedPreferences;
     SharedPreferences.Editor myEditor;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         weatherResultsTextView = (TextView) findViewById(R.id.tv_weather_results_json);
+        weatherTitleTextView = (TextView) findViewById(R.id.tv_weather_title);
         getWeatherQuery();
 
         final Button hourlyButton = (Button) findViewById(R.id.hButton);
@@ -110,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             if (weatherResults != null && !weatherResults.equals("")) {
                 masterWeatherResults = weatherResults;
                 weatherResultParser weatherResultsJSON = new weatherResultParser(weatherResults);
-                String out = weatherResultsJSON.currentWeatherStr(location);
+                String out = weatherResultsJSON.currentWeatherStr();
+                weatherTitleTextView.setText("Current Weather in "+location+":");
                 weatherResultsTextView.setText(out);
             }
         }
