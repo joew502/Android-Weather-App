@@ -15,12 +15,12 @@ import java.util.HashMap;
 public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.hourlyWeatherViewHolder> {
     private ArrayList hourlyWeather;
     private int numberItems;
-    private static int viewHolderCount;
+    //private static int viewHolderCount;
 
     public HourlyAdapter(ArrayList hourlyWeatherResult, int numberOfItems) {
         hourlyWeather = hourlyWeatherResult;
         numberItems = numberOfItems;
-        viewHolderCount = 0;
+        //viewHolderCount = 0;
     }
 
     @Override
@@ -33,20 +33,20 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.hourlyWeat
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         hourlyWeatherViewHolder viewHolder = new hourlyWeatherViewHolder(view);
 
-        HashMap<String, String> hour = (HashMap<String, String>) hourlyWeather.get(viewHolderCount);
+        //HashMap<String, String> hour = (HashMap<String, String>) hourlyWeather.get(viewHolderCount);
 
-        viewHolder.dayView.setText(hour.get("day"));
-        viewHolder.tempView.setText(hour.get("temp") + "°C");
-        viewHolder.rainView.setText("Chance of Rain: " + hour.get("rain") + "%");
-        viewHolder.descView.setText(hour.get("desc"));
+        //viewHolder.dayView.setText(hour.get("day"));
+        //viewHolder.tempView.setText(hour.get("temp") + "°C");
+        //viewHolder.rainView.setText("Chance of Rain: " + hour.get("rain") + "%");
+        //viewHolder.descView.setText(hour.get("desc"));
 
-        viewHolderCount++;
+        //viewHolderCount++;
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull hourlyWeatherViewHolder holder, int position) {
-
+        holder.bind(position);
     }
 
     @Override
@@ -68,6 +68,15 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.hourlyWeat
             tempView = (TextView) itemView.findViewById(R.id.tempView);
             rainView = (TextView) itemView.findViewById(R.id.rainView);
             descView = (TextView) itemView.findViewById(R.id.descView);
+        }
+
+        void bind(int listIndex) {
+            HashMap<String, String> hour = (HashMap<String, String>) hourlyWeather.get(listIndex);
+
+            dayView.setText(hour.get("day"));
+            tempView.setText(hour.get("temp") + "°C");
+            rainView.setText("Chance of Rain: " + hour.get("rain") + "%");
+            descView.setText(hour.get("desc"));
         }
     }
 }

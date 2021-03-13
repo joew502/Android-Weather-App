@@ -220,7 +220,7 @@ public class weatherResultParser {
 
         ArrayList hourlyWeatherResult = new ArrayList();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 48; i++) {
             HashMap<String, String> hourResult = new HashMap<String, String>();
             JSONObject hour = null;
             try {
