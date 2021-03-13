@@ -16,12 +16,10 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
 
     private ArrayList dailyWeather;
     private int numberItems;
-    private static int viewHolderCount;
 
     public DailyAdapter(ArrayList dailyWeatherResult, int numberOfItems) {
         dailyWeather = dailyWeatherResult;
         numberItems = numberOfItems;
-        viewHolderCount = 0;
     }
 
     @Override
@@ -34,21 +32,12 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         dailyWeatherViewHolder viewHolder = new dailyWeatherViewHolder(view);
 
-        HashMap<String, String> day = (HashMap<String, String>) dailyWeather.get(viewHolderCount);
-
-        viewHolder.dayView.setText(day.get("day"));
-        viewHolder.tempMaxView.setText("Min: " + day.get("tempMin") + "°C");
-        viewHolder.tempMinView.setText("Max: " + day.get("tempMax") + "°C");
-        viewHolder.rainView.setText("Chance of Rain: " + day.get("rain") + "%");
-        viewHolder.descView.setText(day.get("desc"));
-
-        viewHolderCount++;
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull dailyWeatherViewHolder holder, int position) {
-
+        holder.bind(position);
     }
 
     @Override
@@ -72,6 +61,16 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.dailyWeather
             tempMinView = (TextView) itemView.findViewById(R.id.tempMinView);
             rainView = (TextView) itemView.findViewById(R.id.rainView);
             descView = (TextView) itemView.findViewById(R.id.descView);
+        }
+
+        void bind(int listIndex) {
+            HashMap<String, String> day = (HashMap<String, String>) dailyWeather.get(listIndex);
+
+            dayView.setText(day.get("day"));
+            tempMaxView.setText("Min: " + day.get("tempMin") + "°C");
+            tempMinView.setText("Max: " + day.get("tempMax") + "°C");
+            rainView.setText("Chance of Rain: " + day.get("rain") + "%");
+            descView.setText(day.get("desc"));
         }
     }
 }
