@@ -78,6 +78,14 @@ public class weatherResultParser {
         return dayFormated;
     }
 
+    private String formatTimeDay(Integer time, String timeZone) {
+        Date timeFormat = new java.util.Date(time*1000L);
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm - EEEE dd");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone(timeZone));
+        String timeDayFormated = sdf.format(timeFormat);
+        return timeDayFormated;
+    }
+
     private HashMap currentWeather(){
         HashMap<String, String> weather = new HashMap<String, String>();
 
@@ -200,5 +208,54 @@ public class weatherResultParser {
             dailyWeatherResult.add(dayResult);
         }
         return dailyWeatherResult;
+    }
+
+    public ArrayList hourlyWeather() {
+        JSONArray allHourlyWeather = null;
+        try {
+            allHourlyWeather = weatherResultJSON.getJSONArray("hourly");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList hourlyWeatherResult = new ArrayList();
+
+        for (int i = 0; i < 48; i++) {
+            HashMap<String, String> hourResult = new HashMap<String, String>();
+            JSONObject hour = null;
+            try {
+                hour = allHourlyWeather.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            assert hour != null;
+            //JSONObject dayTemp = getInner(day, "temp");
+            //JSONObject dayWeather = getInner(day, "weather");
+            Integer unixTime = getInt(hour, "dt");
+            //Integer tempMin = getInt(dayTemp, "day");
+            //Integer tempMax = getInt(dayTemp, "max");
+            Integer pop = getInt(hour, "pop");
+            //String desc = getStr(dayWeather, "Main");
+            Integer temp = getInt(hour, "temp");
+
+            String desc= "";
+
+            try {
+                desc = hour.getJSONArray("weather").getJSONObject(0).getString("main");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            int rain = pop*100;
+
+            String date = formatTimeDay(unixTime, "GMT");
+
+            hourResult.put("day", date);
+            hourResult.put("temp", temp.toString());
+            hourResult.put("rain", Integer.toString(rain));
+            hourResult.put("desc", desc);
+            hourlyWeatherResult.add(hourResult);
+        }
+        return hourlyWeatherResult;
     }
 }
