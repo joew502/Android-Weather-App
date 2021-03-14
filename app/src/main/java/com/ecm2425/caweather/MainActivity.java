@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeatherQuery() {
+        masterWeatherResults = null;
         URL weatherApiUrl = WeatherAPI.buildURL(location);
         // Create a new GetWeatherTask and call its execute method, passing in the url to query
         new GetWeatherTask().execute(weatherApiUrl);
