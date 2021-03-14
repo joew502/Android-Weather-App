@@ -53,10 +53,15 @@ public class MainActivity extends AppCompatActivity {
         hourlyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = MainActivity.this;
-                Class destinationActivity = HourlyActivity.class;
-                Intent intent = new Intent (context, destinationActivity);
-                startActivity(intent);
+                if (masterWeatherResults != null) {
+                    Context context = MainActivity.this;
+                    Class destinationActivity = HourlyActivity.class;
+                    Intent intent = new Intent(context, destinationActivity);
+                    startActivity(intent);
+                } else {
+                    String msg = "Internet Connection Error";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -64,10 +69,15 @@ public class MainActivity extends AppCompatActivity {
         dailyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = MainActivity.this;
-                Class destinationActivity = DailyActivity.class;
-                Intent intent = new Intent (context, destinationActivity);
-                startActivity(intent);
+                if (masterWeatherResults != null) {
+                    Context context = MainActivity.this;
+                    Class destinationActivity = DailyActivity.class;
+                    Intent intent = new Intent (context, destinationActivity);
+                    startActivity(intent);
+                } else {
+                    String msg = "Internet Connection Error";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -120,15 +130,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMoreWeather(View v) {
-        String urlAsString;
-        switch (location) {
-            case "London":
-                urlAsString = "https://openweathermap.org/city/2649808";
-                break;
-            default:
-                urlAsString = "https://openweathermap.org/city/2649808";
+        if (masterWeatherResults != null) {
+            String urlAsString;
+            switch (location) {
+                case "London":
+                    urlAsString = "https://openweathermap.org/city/2649808";
+                    break;
+                default:
+                    urlAsString = "https://openweathermap.org/city/2649808";
+            }
+            openWebPage(urlAsString);
+        } else {
+            String msg = "Internet Connection Error";
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         }
-        openWebPage(urlAsString);
     }
 
     private void openWebPage(String url) {
