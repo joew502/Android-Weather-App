@@ -1,3 +1,3 @@
-# ecm2425 weather app
+# Android Weather App
 
-Android Weather app for ECM2425 CA
+Android Weather App for ECM2425 CA
